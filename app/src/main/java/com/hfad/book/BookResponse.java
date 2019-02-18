@@ -1,35 +1,30 @@
 package com.hfad.book;
 
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
+
 import java.util.List;
 
+@Root(name = "GoodreadsResponse")
 public class BookResponse {
-    private int totalResults;
-    private List<Book> results;
+    @Element(name = "search")
+    private Search search;
 
     public BookResponse() {
     }
 
-    public int getTotalResults() {
-        return totalResults;
+    public Search getSearch() {
+        return search;
     }
 
-    public void setTotalResults(int totalResults) {
-        this.totalResults = totalResults;
-    }
-
-    public List<Book> getResults() {
-        return results;
-    }
-
-    public void setResults(List<Book> results) {
-        this.results = results;
+    public void setSearch(Search search) {
+        this.search = search;
     }
 
     @Override
     public String toString() {
         return "BookResponse{" +
-                "totalResults=" + totalResults +
-                ", results=" + results +
+                "search=" + search +
                 '}';
     }
 }
