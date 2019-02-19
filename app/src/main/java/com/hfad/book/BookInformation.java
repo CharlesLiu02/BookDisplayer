@@ -1,15 +1,16 @@
 package com.hfad.book;
 
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Root;
+import com.tickaroo.tikxml.annotation.Element;
+import com.tickaroo.tikxml.annotation.PropertyElement;
+import com.tickaroo.tikxml.annotation.Xml;
 
-@Root(name = "best_book")
+@Xml(name = "best_book")
 public class BookInformation {
-    @Element(name = "title", required = false)
+    @PropertyElement
     private String title;
-    @Element(name = "author", required = false)
+    @Element
     private Author author;
-    @Element(name = "image_url", required = false)
+    @PropertyElement
     private String imageUrl;
 
     public BookInformation() {

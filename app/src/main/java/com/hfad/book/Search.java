@@ -1,13 +1,15 @@
 package com.hfad.book;
 
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Root;
+import com.tickaroo.tikxml.annotation.Element;
+import com.tickaroo.tikxml.annotation.PropertyElement;
+import com.tickaroo.tikxml.annotation.Xml;
+
 
 import java.util.List;
 
-@Root(name = "search")
+@Xml
 public class Search{
-    @Element(name = "results")
+    @Element
     private List<Book> results;
 
     public Search() {
@@ -27,4 +29,5 @@ public class Search{
                 "results=" + results +
                 '}';
     }
+
 }

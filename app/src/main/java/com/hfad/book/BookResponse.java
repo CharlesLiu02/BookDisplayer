@@ -1,13 +1,13 @@
 package com.hfad.book;
 
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Root;
+import com.tickaroo.tikxml.annotation.Attribute;
+import com.tickaroo.tikxml.annotation.Element;
+import com.tickaroo.tikxml.annotation.PropertyElement;
+import com.tickaroo.tikxml.annotation.Xml;
 
-import java.util.List;
-
-@Root(name = "GoodreadsResponse")
+@Xml(name = "GoodreadsResponse")
 public class BookResponse {
-    @Element(name = "search")
+    @Element
     private Search search;
 
     public BookResponse() {

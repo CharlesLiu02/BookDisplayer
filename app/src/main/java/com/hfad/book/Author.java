@@ -1,11 +1,11 @@
 package com.hfad.book;
 
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Root;
+import com.tickaroo.tikxml.annotation.PropertyElement;
+import com.tickaroo.tikxml.annotation.Xml;
 
-@Root(name = "author")
+@Xml
 public class Author {
-    @Element(name = "name", required = false)
+    @PropertyElement
     private String name;
 
     public Author() {
