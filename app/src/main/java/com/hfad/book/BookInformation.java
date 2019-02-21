@@ -10,7 +10,7 @@ public class BookInformation {
     private String title;
     @Element
     private Author author;
-    @PropertyElement
+    @PropertyElement(name = "image_url")
     private String imageUrl;
 
     public BookInformation() {

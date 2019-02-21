@@ -10,16 +10,16 @@ import java.util.List;
 @Xml
 public class Search{
     @Element
-    private List<Book> results;
+    private BookResults results;
 
     public Search() {
     }
 
-    public List<Book> getResults() {
+    public BookResults getResults() {
         return results;
     }
 
-    public void setResults(List<Book> results) {
+    public void setResults(BookResults results) {
         this.results = results;
     }
 
@@ -29,5 +29,4 @@ public class Search{
                 "results=" + results +
                 '}';
     }
-
 }

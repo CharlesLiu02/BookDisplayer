@@ -8,13 +8,13 @@ import com.tickaroo.tikxml.annotation.Xml;
 @Xml(name = "work")
 public class Book {
 
-    @PropertyElement
+    @PropertyElement(name = "original_publication_year")
     private String originalPublicationYear;
-    @PropertyElement
+    @PropertyElement(name = "ratings_count")
     private int ratingsCount;
-    @PropertyElement
+    @PropertyElement(name = "average_rating")
     private double averageRating;
-    @Element
+    @Element(name = "best_book")
     private BookInformation bookInformation;
 
     public Book() {

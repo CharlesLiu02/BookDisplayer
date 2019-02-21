@@ -13,16 +13,21 @@ import com.hfad.imgur.R;
 import com.tickaroo.tikxml.TikXml;
 import com.tickaroo.tikxml.retrofit.TikXmlConverterFactory;
 
+import java.io.IOException;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okio.BufferedSource;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Converter;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     private EditText editTextSearchTerms;
+    public static final String TAG = "MAINACTIVITY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
                 .exceptionOnUnreadXml(false) // set this to false if you don't want that an exception is thrown
                 .build();
 
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://goodreads.com/")
                 .addConverterFactory(TikXmlConverterFactory.create(tikXml))
@@ -53,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         BookService bookService = retrofit.create(BookService.class);
 
         //Call<BookResponse> call = bookService.searchByKeyword(Credentials.API_KEY, editTextSearchTerms.getText().toString());
-        Call<BookResponse> call = bookService.searchByKeyword(Credentials.API_KEY, "Ender game");
+        Call<BookResponse> call = bookService.searchByKeyword(Credentials.API_KEY, "Ender Game");
 
         //execute call on background thread
         call.enqueue(new Callback<BookResponse>() {
@@ -63,9 +67,17 @@ public class MainActivity extends AppCompatActivity {
                     Log.e("enqueue", "code: " + response.code());
                     return;
                 }
-                List<Book> books = response.body().getSearch().getResults();
-                Log.e("response", response.body().toString());
-                Log.e("enqueue", "onResponse: " + books.toString());
+
+                BookResults results = response.body().getSearch().getResults();
+                if(results != null) {
+                    Book book = results.getWorks().get(0);
+                    Log.e(TAG, response.body().getSearch().getResults() + "");
+
+                } else {
+                    Log.e(TAG, "onResponse: book response is null");
+                }
+
+                //Log.e("enqueue", "onResponse: " + books.toString());
             }
 
             @Override
