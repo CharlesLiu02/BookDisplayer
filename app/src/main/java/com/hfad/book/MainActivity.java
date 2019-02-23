@@ -4,14 +4,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.JsonReader;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+
 import com.hfad.imgur.R;
 import com.tickaroo.tikxml.TikXml;
 import com.tickaroo.tikxml.retrofit.TikXmlConverterFactory;
+
 
 import java.io.IOException;
 import java.util.List;
@@ -27,6 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     private EditText editTextSearchTerms;
+    private Button buttonSearch;
     public static final String TAG = "MAINACTIVITY";
 
     @Override
@@ -35,11 +40,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         wireWidgets();
-        searchBooks();
+        buttonSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchBooks();
+            }
+        });
     }
 
     private void wireWidgets() {
-
+        editTextSearchTerms = findViewById(R.id.editText_main_search);
+        buttonSearch = findViewById(R.id.button_main_search);
     }
 
     private void searchBooks() {
@@ -56,8 +67,7 @@ public class MainActivity extends AppCompatActivity {
         //retrofit creates interface
         BookService bookService = retrofit.create(BookService.class);
 
-        //Call<BookResponse> call = bookService.searchByKeyword(Credentials.API_KEY, editTextSearchTerms.getText().toString());
-        Call<BookResponse> call = bookService.searchByKeyword(Credentials.API_KEY, "Ender Game");
+        Call<BookResponse> call = bookService.searchByKeyword(Credentials.API_KEY, editTextSearchTerms.getText().toString());
 
         //execute call on background thread
         call.enqueue(new Callback<BookResponse>() {
@@ -67,17 +77,8 @@ public class MainActivity extends AppCompatActivity {
                     Log.e("enqueue", "code: " + response.code());
                     return;
                 }
-
                 BookResults results = response.body().getSearch().getResults();
-                if(results != null) {
-                    Book book = results.getWorks().get(0);
-                    Log.e(TAG, response.body().getSearch().getResults() + "");
-
-                } else {
-                    Log.e(TAG, "onResponse: book response is null");
-                }
-
-                //Log.e("enqueue", "onResponse: " + books.toString());
+                Log.e("enqueue", "onResponse: " + results.toString());
             }
 
             @Override
