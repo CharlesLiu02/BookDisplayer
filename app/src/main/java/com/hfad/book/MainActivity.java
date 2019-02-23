@@ -10,22 +10,24 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.hfad.imgur.R;
+import com.tickaroo.tikxml.TikXml;
+import com.tickaroo.tikxml.retrofit.TikXmlConverterFactory;
 
-import org.json.XML;
-import org.simpleframework.xml.convert.AnnotationStrategy;
-import org.simpleframework.xml.core.Persister;
-
+import java.io.IOException;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okio.BufferedSource;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Converter;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     private EditText editTextSearchTerms;
+    public static final String TAG = "MAINACTIVITY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,26 +35,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         wireWidgets();
-        searchImages();
+        searchBooks();
     }
 
     private void wireWidgets() {
 
     }
 
-    private void searchImages() {
-        Gson gson = new GsonBuilder().setLenient().create();
+    private void searchBooks() {
+
+        TikXml tikXml = new TikXml.Builder()
+                .exceptionOnUnreadXml(false) // set this to false if you don't want that an exception is thrown
+                .build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://goodreads.com")
-                .addConverterFactory(SimpleXmlConverterFactory.createNonStrict(new Persister(new AnnotationStrategy())))
+                .baseUrl("https://goodreads.com/")
+                .addConverterFactory(TikXmlConverterFactory.create(tikXml))
                 .build();
 
         //retrofit creates interface
         BookService bookService = retrofit.create(BookService.class);
 
         //Call<BookResponse> call = bookService.searchByKeyword(Credentials.API_KEY, editTextSearchTerms.getText().toString());
-        Call<BookResponse> call = bookService.searchByKeyword(Credentials.API_KEY, "");
+        Call<BookResponse> call = bookService.searchByKeyword(Credentials.API_KEY, "Ender Game");
 
         //execute call on background thread
         call.enqueue(new Callback<BookResponse>() {
@@ -62,8 +67,17 @@ public class MainActivity extends AppCompatActivity {
                     Log.e("enqueue", "code: " + response.code());
                     return;
                 }
-                List<Book> books = response.body().getSearch().getResults();
-                Log.e("enqueue", "onResponse: " + books.toString());
+
+                BookResults results = response.body().getSearch().getResults();
+                if(results != null) {
+                    Book book = results.getWorks().get(0);
+                    Log.e(TAG, response.body().getSearch().getResults() + "");
+
+                } else {
+                    Log.e(TAG, "onResponse: book response is null");
+                }
+
+                //Log.e("enqueue", "onResponse: " + books.toString());
             }
 
             @Override

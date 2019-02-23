@@ -1,17 +1,20 @@
 package com.hfad.book;
 
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Root;
+import com.tickaroo.tikxml.annotation.Element;
+import com.tickaroo.tikxml.annotation.PropertyElement;
+import com.tickaroo.tikxml.annotation.Xml;
 
-@Root(name = "work")
+
+@Xml(name = "work")
 public class Book {
-    @Element(name = "original_publication_year", required = false)
+
+    @PropertyElement(name = "original_publication_year")
     private String originalPublicationYear;
-    @Element(name = "ratings_count", required = false)
+    @PropertyElement(name = "ratings_count")
     private int ratingsCount;
-    @Element(name = "average_rating", required = false)
+    @PropertyElement(name = "average_rating")
     private double averageRating;
-    @Element(name = "best_book", required = false)
+    @Element(name = "best_book")
     private BookInformation bookInformation;
 
     public Book() {
