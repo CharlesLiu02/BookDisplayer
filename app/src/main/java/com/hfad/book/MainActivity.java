@@ -1,35 +1,27 @@
 package com.hfad.book;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.JsonReader;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-
 import com.hfad.imgur.R;
 import com.tickaroo.tikxml.TikXml;
 import com.tickaroo.tikxml.retrofit.TikXmlConverterFactory;
 
 
-import java.io.IOException;
-import java.util.List;
+import java.io.Serializable;
 
-import okhttp3.MediaType;
-import okio.BufferedSource;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Converter;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Serializable{
     private EditText editTextSearchTerms;
     private Button buttonSearch;
     public static final String TAG = "MAINACTIVITY";
@@ -78,7 +70,12 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
                 BookResults results = response.body().getSearch().getResults();
-                Log.e("enqueue", "onResponse: " + results.toString());
+
+                Gson gson = new Gson();
+                String json = gson.toJson(results);
+                Intent intent = new Intent(MainActivity.this, DisplayActivity.class);
+                intent.putExtra("searchResults", json);
+                startActivity(intent);
             }
 
             @Override
