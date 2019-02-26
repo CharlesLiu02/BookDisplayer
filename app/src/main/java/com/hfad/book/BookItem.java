@@ -1,7 +1,5 @@
 package com.hfad.book;
 
-import android.widget.RatingBar;
-
 public class BookItem {
     private String url;
     private String title;
@@ -45,5 +43,15 @@ public class BookItem {
 
     public void setRating(double rating) {
         this.rating = rating;
+    }
+
+    @Override
+    public String toString() {
+        return "BookItem{" +
+                "url='" + url + '\'' +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", rating=" + rating +
+                '}';
     }
 }
