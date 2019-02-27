@@ -1,5 +1,6 @@
 package com.hfad.book;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -10,8 +11,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.hfad.imgur.BookActivity;
 import com.hfad.imgur.R;
 
 import java.io.InputStream;
@@ -19,23 +23,39 @@ import java.net.URL;
 import java.util.List;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
-    private List<BookItem> bookItems;
-    public static class BookViewHolder extends RecyclerView.ViewHolder {
+    private List<Book> bookItems;
+    public class BookViewHolder extends RecyclerView.ViewHolder {
         private ImageView imageView;
         private TextView title;
         private TextView author;
         private RatingBar ratingBar;
 
-        public BookViewHolder(View itemView) {
+        public BookViewHolder(final View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView_book_image);
             title = itemView.findViewById(R.id.textView_book_title);
             author = itemView.findViewById(R.id.textView_book_author);
             ratingBar = itemView.findViewById(R.id.ratingBar_book_rating);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // get position
+                    int pos = getAdapterPosition();
+                    Book book = bookItems.get(pos);
+
+                    Gson gson = new Gson();
+                    String json = gson.toJson(book);
+
+                    Intent intent = new Intent(v.getContext(), BookActivity.class);
+                    intent.putExtra("book", json);
+                    v.getContext().startActivity(intent);
+                }
+            });
         }
     }
 
-    public BookAdapter(List<BookItem> bookItems){
+    public BookAdapter(List<Book> bookItems){
         this.bookItems = bookItems;
     }
 
@@ -48,27 +68,16 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull BookAdapter.BookViewHolder bookViewHolder, int position) {
-        BookItem currentBookItem = bookItems.get(position);
-        Glide.with(bookViewHolder.imageView).load(currentBookItem.getUrl()).into(bookViewHolder.imageView);
-        //bookViewHolder.imageView.setImageDrawable(LoadImageFromWebOperations(currentBookItem.getUrl()));
-        bookViewHolder.author.setText(currentBookItem.getAuthor());
-        bookViewHolder.title.setText(currentBookItem.getTitle());
-        bookViewHolder.ratingBar.setRating((float)currentBookItem.getRating());
+        Book currentBook = bookItems.get(position);
+        BookInformation currentBookInformation = currentBook.getBookInformation();
+        Glide.with(bookViewHolder.imageView).load(currentBookInformation.getImageUrl()).into(bookViewHolder.imageView);
+        bookViewHolder.author.setText(currentBookInformation.getAuthor().getName());
+        bookViewHolder.title.setText(currentBookInformation.getTitle());
+        bookViewHolder.ratingBar.setRating((float)currentBook.getAverageRating());
     }
 
     @Override
     public int getItemCount() {
         return bookItems.size();
-    }
-
-    public static Drawable LoadImageFromWebOperations(String url) {
-        try {
-            InputStream is = (InputStream) new URL(url).getContent();
-            Drawable d = Drawable.createFromStream(is, "src name");
-            Log.e("drawable", d.toString());
-            return d;
-        } catch (Exception e) {
-            return null;
-        }
     }
 }

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.hfad.imgur.R;
@@ -70,12 +71,15 @@ public class MainActivity extends AppCompatActivity implements Serializable{
                     return;
                 }
                 BookResults results = response.body().getSearch().getResults();
-
-                Gson gson = new Gson();
-                String json = gson.toJson(results);
-                Intent intent = new Intent(MainActivity.this, DisplayActivity.class);
-                intent.putExtra("searchResults", json);
-                startActivity(intent);
+                if(results.getWorks() == null){
+                    Toast.makeText(MainActivity.this, "No books found. Please enter another search.", Toast.LENGTH_SHORT).show();
+                }else {
+                    Gson gson = new Gson();
+                    String json = gson.toJson(results);
+                    Intent intent = new Intent(MainActivity.this, DisplayActivity.class);
+                    intent.putExtra("searchResults", json);
+                    startActivity(intent);
+                }
             }
 
             @Override
