@@ -25,12 +25,14 @@ public class DisplayActivity extends AppCompatActivity {
 
         wireWidgets();
 
+        //receives list of books object from MainActivity
         Gson gson = new Gson();
         results = gson.fromJson(getIntent().getStringExtra("searchResults"), BookResults.class).getWorks();
 
         layoutManager = new LinearLayoutManager(this);
         bookAdapter = new BookAdapter(results);
 
+        //set layout manager before adapter
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(bookAdapter);
     }

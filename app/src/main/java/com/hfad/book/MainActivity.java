@@ -25,7 +25,6 @@ import retrofit2.Retrofit;
 public class MainActivity extends AppCompatActivity implements Serializable{
     private EditText editTextSearchTerms;
     private Button buttonSearch;
-    public static final String TAG = "MAINACTIVITY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements Serializable{
         setContentView(R.layout.activity_main);
 
         wireWidgets();
+
+        //click search
         buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,11 +48,12 @@ public class MainActivity extends AppCompatActivity implements Serializable{
     }
 
     private void searchBooks() {
-
+        //XML converter to string
         TikXml tikXml = new TikXml.Builder()
                 .exceptionOnUnreadXml(false) // set this to false if you don't want that an exception is thrown
                 .build();
 
+        //retrofit gets information from internet and returns XML
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://goodreads.com/")
                 .addConverterFactory(TikXmlConverterFactory.create(tikXml))
@@ -60,20 +62,25 @@ public class MainActivity extends AppCompatActivity implements Serializable{
         //retrofit creates interface
         BookService bookService = retrofit.create(BookService.class);
 
+        //call to return list of books
         Call<BookResponse> call = bookService.searchByKeyword(Credentials.API_KEY, editTextSearchTerms.getText().toString());
 
         //execute call on background thread
         call.enqueue(new Callback<BookResponse>() {
             @Override
             public void onResponse(Call<BookResponse> call, Response<BookResponse> response) {
+                //checks for error codes such as 404
                 if(!response.isSuccessful()){
                     Log.e("enqueue", "code: " + response.code());
                     return;
                 }
+                //get response abd put in BookResults
                 BookResults results = response.body().getSearch().getResults();
+                //if no books were found, invalid search
                 if(results.getWorks() == null){
                     Toast.makeText(MainActivity.this, "No books found. Please enter another search.", Toast.LENGTH_SHORT).show();
                 }else {
+                    //uses gson to send list of books to DisplayActivity to be shown in recycler view
                     Gson gson = new Gson();
                     String json = gson.toJson(results);
                     Intent intent = new Intent(MainActivity.this, DisplayActivity.class);

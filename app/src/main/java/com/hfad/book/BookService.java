@@ -14,4 +14,7 @@ public interface BookService {
     Call<BookResponse> searchByKeyword(@Query("key") String key,
                               @Query("q") String searchTerm);
 
+    @GET("book/title.xml")
+    Call<DescriptionResponse> searchForSummary(@Query("key") String key, @Query("title") String title, @Query("author") String author);
+
 }

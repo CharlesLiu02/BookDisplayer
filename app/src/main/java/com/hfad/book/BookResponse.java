@@ -5,6 +5,7 @@ import com.tickaroo.tikxml.annotation.Element;
 import com.tickaroo.tikxml.annotation.PropertyElement;
 import com.tickaroo.tikxml.annotation.Xml;
 
+//need to use annotations os that TickXml can match results to variables
 @Xml(name = "GoodreadsResponse")
 public class BookResponse {
     @Element
