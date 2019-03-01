@@ -26,6 +26,7 @@
         android:isIndicator="true"
         android:numStars="5"
         android:rating="3"
+        android:stepSize=".01"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
