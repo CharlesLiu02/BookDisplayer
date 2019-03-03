@@ -4,13 +4,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
 
 import com.google.gson.Gson;
 import com.hfad.imgur.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DisplayActivity extends AppCompatActivity {

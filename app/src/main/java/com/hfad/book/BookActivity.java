@@ -96,6 +96,7 @@ public class BookActivity extends AppCompatActivity{
         textViewAuthor.setText("By " + book.getBookInformation().getAuthor().getName());
         textViewRating.setText(book.getAverageRating() + "/5");
         textViewSummaryTitle.setText("Summary: ");
+        //uses glide to display book cover from url
         Glide.with(imageViewBookImage).load(book.getBookInformation().getImageUrl()).into(imageViewBookImage);
         ratingBar.setRating((float)book.getAverageRating());
 

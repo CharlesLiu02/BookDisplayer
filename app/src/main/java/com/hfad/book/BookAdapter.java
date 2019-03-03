@@ -18,6 +18,7 @@ import java.util.List;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
     private List<Book> bookItems;
+    //class of view holder that defines each view in the recycler view
     public class BookViewHolder extends RecyclerView.ViewHolder {
         private ImageView imageView;
         private TextView title;
@@ -38,6 +39,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
                     int pos = getAdapterPosition();
                     Book book = bookItems.get(pos);
 
+                    //send to book activity the book that the user clicked in the DisplayActivity
                     Gson gson = new Gson();
                     String json = gson.toJson(book);
 
@@ -49,10 +51,12 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         }
     }
 
+    //constructor
     public BookAdapter(List<Book> bookItems){
         this.bookItems = bookItems;
     }
 
+    //inflate view holder
     @Override
     public BookAdapter.BookViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_book, viewGroup, false);
@@ -60,6 +64,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         return bookViewHolder;
     }
 
+    //bind view holder to adapter
     @Override
     public void onBindViewHolder(@NonNull BookAdapter.BookViewHolder bookViewHolder, int position) {
         Book currentBook = bookItems.get(position);
