@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements Serializable{
                     String json = gson.toJson(results);
                     Intent intent = new Intent(MainActivity.this, DisplayActivity.class);
                     intent.putExtra("searchResults", json);
+                    intent.putExtra("searchTerm", editTextSearchTerms.getText().toString());
                     startActivity(intent);
                 }
             }
