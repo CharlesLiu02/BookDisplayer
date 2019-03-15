@@ -1,5 +1,6 @@
 package com.hfad.book;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements Serializable{
                     //uses gson to send list of books to DisplayActivity to be shown in recycler view
                     Gson gson = new Gson();
                     String json = gson.toJson(results);
-                    Intent intent = new Intent(MainActivity.this, DisplayActivity.class);
+                    Intent intent = new Intent(MainActivity.this, BookshelfActivity.class);
                     intent.putExtra("searchResults", json);
                     intent.putExtra("searchTerm", editTextSearchTerms.getText().toString());
                     startActivity(intent);

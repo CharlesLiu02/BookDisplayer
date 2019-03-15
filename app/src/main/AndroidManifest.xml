@@ -19,7 +19,10 @@
             </intent-filter>
         </activity>
         <activity android:name="com.hfad.book.DisplayActivity" />
-        <activity android:name="com.hfad.book.BookActivity"></activity>
+        <activity android:name="com.hfad.book.BookActivity" />
+        <activity
+            android:name="com.hfad.book.BookshelfActivity"
+            android:label="@string/title_activity_bookshelf"></activity>
     </application>
 
 </manifest>

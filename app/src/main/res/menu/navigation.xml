@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_search"
+        android:icon="@drawable/ic_search"
+        android:title="@string/title_search" />
+
+    <item
+        android:id="@+id/navigation_favorite_books"
+        android:icon="@drawable/ic_star"
+        android:title="@string/title_favorite_books" />
+
+</menu>
