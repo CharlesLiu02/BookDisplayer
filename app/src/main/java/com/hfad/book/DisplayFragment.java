@@ -14,12 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.hfad.imgur.R;
 import com.tickaroo.tikxml.TikXml;
 import com.tickaroo.tikxml.retrofit.TikXmlConverterFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -39,7 +37,7 @@ public class DisplayFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.activity_display, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_display, container, false);
         recyclerView = rootView.findViewById(R.id.recyclerView_display);
         editTextSearch = rootView.findViewById(R.id.editText_display_search);
         buttonSearch = rootView.findViewById(R.id.button_display_search);
