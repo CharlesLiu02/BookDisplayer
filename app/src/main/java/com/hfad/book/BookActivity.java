@@ -1,19 +1,39 @@
 package com.hfad.book;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.hfad.imgur.R;
 import com.tickaroo.tikxml.TikXml;
 import com.tickaroo.tikxml.retrofit.TikXmlConverterFactory;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,13 +48,17 @@ public class BookActivity extends AppCompatActivity{
     private TextView textViewSummaryTitle;
     private TextView textViewSummary;
     private ImageView imageViewBookImage;
-    private RatingBar ratingBar;
+    private RatingBar ratingBarRating;
+    private Button buttonFavoriteBook;
+    private List<Book> favoriteBooks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
 
         wireWidgets();
+
+        favoriteBooks = new ArrayList<>();
 
         //recieves book object from DisplayActivity from intent
         Gson gson = new Gson();
@@ -43,9 +67,80 @@ public class BookActivity extends AppCompatActivity{
         getSummary();
         //displays information on textviews
         setViews();
+
+        buttonFavoriteBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(BookActivity.this, "Added Book to Favorites", Toast.LENGTH_SHORT).show();
+                writeToFile(book);
+            }
+        });
+
     }
 
-    private void getSummary() {
+    public void writeToFile(Book book) {
+        // check if the file already exists...if it doesn't:
+        String fileName = "favoriteBooks.txt";
+        File file = new File(getFilesDir(), fileName);
+        if(file.exists()) {
+            readFile();
+            favoriteBooks.add(book);
+            Gson gson = new Gson();
+            String s = gson.toJson(favoriteBooks);
+
+            FileOutputStream outputStream;
+
+            try {
+                outputStream = openFileOutput(fileName, Context.MODE_PRIVATE);
+                outputStream.write(s.getBytes());
+                outputStream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else {
+            Gson gson = new Gson();
+            List<Book> books = new ArrayList<>();
+            books.add(book);
+            String s = gson.toJson(books);
+
+            FileOutputStream outputStream;
+
+            try {
+                outputStream = openFileOutput(fileName, Context.MODE_PRIVATE);
+                outputStream.write(s.getBytes());
+                outputStream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    private void readFile() {
+        try {
+            FileInputStream fis = getApplicationContext().openFileInput("favoriteBooks.txt");
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader bufferedReader = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String line;
+            try {
+                while ((line = bufferedReader.readLine()) != null) {
+                    sb.append(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+            String json = sb.toString();
+            Gson gson = new Gson();
+            favoriteBooks = gson.fromJson(json, new TypeToken<ArrayList<Book>>() {}.getType());
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void getSummary(){
         TikXml tikXml = new TikXml.Builder()
                 .exceptionOnUnreadXml(false) // set this to false if you don't want that an exception is thrown
                 .build();
@@ -70,7 +165,7 @@ public class BookActivity extends AppCompatActivity{
                 }
                 //gets summary
                 String summary = response.body().getDescription().getSummary();
-                if(summary == null) {
+                if(summary.equals("")) {
                     textViewSummary.setText("No description available.");
                 }else{
                     //gets HTML from string and interprets it
@@ -98,7 +193,7 @@ public class BookActivity extends AppCompatActivity{
         textViewSummaryTitle.setText("Summary: ");
         //uses glide to display book cover from url
         Glide.with(imageViewBookImage).load(book.getBookInformation().getImageUrl()).into(imageViewBookImage);
-        ratingBar.setRating((float)book.getAverageRating());
+        ratingBarRating.setRating((float)book.getAverageRating());
 
     }
 
@@ -109,6 +204,7 @@ public class BookActivity extends AppCompatActivity{
         textViewSummaryTitle = findViewById(R.id.textView_book_activity_summary_title);
         textViewSummary = findViewById(R.id.textView_book_activity_summary);
         imageViewBookImage = findViewById(R.id.imageView_book_activity_book_image);
-        ratingBar = findViewById(R.id.ratingBar_book_activity_rating);
+        ratingBarRating = findViewById(R.id.ratingBar_book_activity_rating);
+        buttonFavoriteBook = findViewById(R.id.button_book_favorite_book);
     }
 }

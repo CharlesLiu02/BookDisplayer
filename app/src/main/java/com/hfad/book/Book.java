@@ -1,12 +1,17 @@
 package com.hfad.book;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.tickaroo.tikxml.annotation.Element;
 import com.tickaroo.tikxml.annotation.PropertyElement;
 import com.tickaroo.tikxml.annotation.Xml;
 
+import java.io.Serializable;
+
 
 @Xml(name = "work")
-public class Book {
+public class Book{
 
     @PropertyElement(name = "original_publication_year")
     private String originalPublicationYear;

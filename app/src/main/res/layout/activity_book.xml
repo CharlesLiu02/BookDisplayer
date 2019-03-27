@@ -9,14 +9,13 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ImageView
             android:id="@+id/imageView_book_activity_book_image"
             android:layout_width="206dp"
             android:layout_height="229dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="68dp"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView_book_activity_author"
             app:srcCompat="@mipmap/ic_launcher" />
@@ -104,5 +103,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView_book_activity_summary_title" />
+
+        <Button
+            android:id="@+id/button_book_favorite_book"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Add To  \n Favorites"
+            app:layout_constraintBottom_toTopOf="@+id/ratingBar_book_activity_rating"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView_book_activity_book_image"
+            app:layout_constraintTop_toBottomOf="@+id/textView_book_activity_author" />
+
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

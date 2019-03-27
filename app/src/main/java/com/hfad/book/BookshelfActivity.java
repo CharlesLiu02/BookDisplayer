@@ -3,6 +3,7 @@ package com.hfad.book;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.hfad.imgur.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookshelfActivity extends AppCompatActivity {
