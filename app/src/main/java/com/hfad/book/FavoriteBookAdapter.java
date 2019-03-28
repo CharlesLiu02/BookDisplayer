@@ -18,10 +18,11 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.hfad.imgur.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FavoriteBookAdapter extends RecyclerView.Adapter<FavoriteBookAdapter.BookViewHolder>{
-    private List<Book> bookItems;
+    private List<Book> bookItems = new ArrayList<>();
     private int position;
     private Context context;
     private RecyclerViewClickListener recyclerViewClickListener;
