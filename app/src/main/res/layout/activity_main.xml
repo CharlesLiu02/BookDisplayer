@@ -9,51 +9,44 @@
     <EditText
         android:id="@+id/editText_main_search"
         android:layout_width="299dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="72dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="28dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:ems="10"
         android:hint="Find books by title, author, or ISBN"
         android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/button_main_search"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imageView_main_goodreads"
-        android:layout_width="174dp"
-        android:layout_height="99dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="159dp"
+        android:layout_height="96dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="44dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView_main_goodreads"
-        app:layout_constraintTop_toBottomOf="@+id/button_main_search"
         app:srcCompat="@drawable/goodreads" />
 
     <TextView
         android:id="@+id/textView_main_goodreads"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="64dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="64dp"
         android:text="Powered by"
         android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageView_main_goodreads"
-        app:layout_constraintHorizontal_bias="0.684"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_main_search" />
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="418dp"
-        android:layout_height="176dp"
+        android:layout_width="0dp"
+        android:layout_height="172dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,11 +55,13 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="379dp"
-        android:layout_height="133dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="36dp"
+        android:layout_width="0dp"
+        android:layout_height="129dp"
+        android:layout_marginBottom="48dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/editText_main_search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
@@ -76,12 +71,12 @@
         android:id="@+id/button_main_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginBottom="32dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:text="Search"
+        app:layout_constraintBottom_toTopOf="@+id/imageView_main_goodreads"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_main_search" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
