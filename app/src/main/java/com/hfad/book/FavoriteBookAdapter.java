@@ -22,8 +22,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FavoriteBookAdapter extends RecyclerView.Adapter<FavoriteBookAdapter.BookViewHolder>{
+    //list of favorite books
+    //need to initialize to prevent null object reference
     private List<Book> bookItems = new ArrayList<>();
     private int position;
+
+    //needed to implement context menu
     private Context context;
     private RecyclerViewClickListener recyclerViewClickListener;
 
@@ -41,6 +45,7 @@ public class FavoriteBookAdapter extends RecyclerView.Adapter<FavoriteBookAdapte
             author = itemView.findViewById(R.id.textView_book_author);
             ratingBar = itemView.findViewById(R.id.ratingBar_book_rating);
 
+            //create context menu called delete
             itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
                 @Override
                 public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -48,6 +53,7 @@ public class FavoriteBookAdapter extends RecyclerView.Adapter<FavoriteBookAdapte
                 }
             });
 
+            //get position of book clicked in favorite books
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -55,6 +61,7 @@ public class FavoriteBookAdapter extends RecyclerView.Adapter<FavoriteBookAdapte
                 }
             });
 
+            //send to book activity the book that the user clicked
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -62,7 +69,6 @@ public class FavoriteBookAdapter extends RecyclerView.Adapter<FavoriteBookAdapte
                     int pos = getAdapterPosition();
                     Book book = bookItems.get(pos);
 
-                    //send to book activity the book that the user clicked
                     Gson gson = new Gson();
                     String json = gson.toJson(book);
 

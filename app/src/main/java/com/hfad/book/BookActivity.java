@@ -60,7 +60,7 @@ public class BookActivity extends AppCompatActivity{
 
         favoriteBooks = new ArrayList<>();
 
-        //recieves book object from DisplayActivity from intent
+        //receives book object from DisplayActivity from intent
         Gson gson = new Gson();
         book = gson.fromJson(getIntent().getStringExtra("book"), Book.class);
         //get summary of specific book using retrofit
@@ -80,6 +80,7 @@ public class BookActivity extends AppCompatActivity{
 
     public void writeToFile(Book book) {
         // check if the file already exists...if it doesn't:
+        //then create a new file and write book object
         String fileName = "favoriteBooks.txt";
         File file = new File(getFilesDir(), fileName);
         if(file.exists()) {

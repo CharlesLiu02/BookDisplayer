@@ -42,6 +42,7 @@ public class FavoriteBooksFragment extends Fragment implements RecyclerViewClick
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_favorite_books, container, false);
 
+        //initialize favoriteBooks
         readFile();
 
         recyclerView = rootView.findViewById(R.id.recycler_view_favorite_books);
@@ -69,6 +70,8 @@ public class FavoriteBooksFragment extends Fragment implements RecyclerViewClick
     }
 
     private void deleteBook(int position) {
+        //remove book from list
+        //then write list to file
         favoriteBooks.remove(position);
         writeToFile(favoriteBooks);
         bookAdapter.notifyDataSetChanged();
